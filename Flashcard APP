@@ -1,0 +1,64 @@
+import random
+
+class Flashcard:
+    def __init__(self, question, answer):
+        self.question = question
+        self.answer = answer
+
+class FlashcardApp:
+    def __init__(self):
+        self.flashcards = []
+
+    def add_flashcard(self, question, answer):
+        flashcard = Flashcard(question, answer)
+        self.flashcards.append(flashcard)
+        print("Flashcard added!")
+
+    def view_flashcards(self):
+        if not self.flashcards:
+            print("There's no flashcards.")
+            return
+        for idx, flashcard in enumerate(self.flashcards):
+            print(f"{idx + 1}. Question: {flashcard.question} - Answer: {flashcard.answer}")
+
+    def quiz(self):
+        if not self.flashcards:
+            print("There's no flashcards for quiz.")
+            return
+        random.shuffle(self.flashcards)
+        score = 0
+        for flashcard in self.flashcards:
+            user_answer = input(f"Question: {flashcard.question}\nAnswer: ")
+            if user_answer.lower() == flashcard.answer.lower():
+                print("Right answer!")
+                score += 1
+            else:
+                print(f"Wrong answer! The right answer: {flashcard.answer}")
+        print(f"The quiz is ended! Your points: {score}/{len(self.flashcards)}")
+
+def main():
+    app = FlashcardApp()
+    while True:
+        print("\nFlashcard Quiz App")
+        print("1. Add Flashcard")
+        print("2. Check Flashcards")
+        print("3. Start Quiz")
+        print("4. Exit")
+        choice = input("Choose a number [1/2/3/4]: ")
+
+        if choice == '1':
+            question = input("Write the question: ")
+            answer = input("Write the answer: ")
+            app.add_flashcard(question, answer)
+        elif choice == '2':
+            app.view_flashcards()
+        elif choice == '3':
+            app.quiz()
+        elif choice == '4':
+            print("Exit...")
+            break
+        else:
+            print("There's no such choice!")
+
+if __name__ == "__main__":
+    main()
